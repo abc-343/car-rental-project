@@ -121,28 +121,3 @@ curl -i -X DELETE http://localhost:8080/api/rentals/12
 # missing id -> 404
 curl -i http://localhost:8080/api/cars/9999
 ```
-
-## Testing
-
-- **Postman:** import `postman/car-rental-api.postman_collection.json`.
-  Change the `baseUrl` collection variable to the Render URL to test the deployed app.
-  Each request has a test that checks the status code.
-- **Automated tests:** `./gradlew test` (or right click `src/test/java` → Run 'All Tests' in IntelliJ)
-  - `service/RentalServiceTest`, `service/CustomerServiceTest` — unit tests with Mockito
-  - `repository/RentalRepositoryTest` — `@DataJpaTest` on the H2 database
-  - `controller/*IntegrationTest` — full app with MockMvc (CRUD, aggregated endpoints, 201/204/400/404/409)
-
-## Deployment (Render)
-
-1. Push this folder to a GitHub repository.
-2. On [render.com](https://render.com) → New → **Web Service** → connect the repo.
-3. Render detects the `Dockerfile`. Choose **Language: Docker**, instance type **Free**.
-4. Click **Create Web Service** and wait for the build (a few minutes).
-5. Copy the URL (ex: `https://car-rental-api-xxxx.onrender.com`) and put it at the top of this README.
-
-Notes:
-
-- The app reads the `PORT` environment variable that Render provides (`server.port=${PORT:8080}`).
-- H2 is in-memory, so the data resets on every restart/redeploy. `data.sql` re-seeds 12 rows per table every time.
-- The free Render plan sleeps after inactivity, so the first request can take ~1 minute.
-- CORS is enabled for `/api/**` so the React frontend can call the API.
