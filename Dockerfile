@@ -4,7 +4,7 @@
 FROM eclipse-temurin:17-jdk AS build
 WORKDIR /app
 COPY . .
-RUN chmod +x gradlew && ./gradlew bootJar -x test --no-daemon
+RUN chmod +x gradlew && ./gradlew bootJar --no-daemon
 
 # Step 2: run the jar with a smaller Java image
 FROM eclipse-temurin:17-jre
