@@ -31,6 +31,7 @@ Or from a terminal: `./gradlew bootRun` (Windows: `gradlew.bat bootRun`).
 ```
 com.carrental.app
 ├── config                    WebConfig (CORS for the React frontend)
+├── exception                 NotFoundException(s), BadRequestException, ConflictException
 ├── presentationlayer         Presentation layer (HTTP in/out)
 │   ├── controller            REST controllers
 │   ├── dto
@@ -39,8 +40,7 @@ com.carrental.app
 │   └── exception             GlobalExceptionHandler, ErrorResponse
 ├── businesslayer             Business logic layer
 │   ├── service               Services (business rules)
-│   ├── mapper                Manual entity <-> DTO mappers
-│   └── exception             NotFoundException(s), BadRequestException, ConflictException
+│   └── mapper                Manual entity <-> DTO mappers
 └── dataaccesslayer           Data access layer
     ├── entity                JPA entities + enums
     └── repository            Spring Data JPA repositories
