@@ -124,3 +124,17 @@ curl -i -X DELETE http://localhost:8080/api/rentals/12
 # missing id -> 404
 curl -i http://localhost:8080/api/cars/9999
 ```
+
+## Postman
+
+Import one of the collections from the `postman/` folder (Postman → Import):
+
+| File                                                 | Targets                                         |
+| ---------------------------------------------------- | ----------------------------------------------- |
+| `postman/car-rental-api.postman_collection.json`     | Local app (`http://localhost:8080`)             |
+| `postman/car-rental-api-render.postman_collection.json` | Live deployment (`https://car-rental-project-k0e4.onrender.com`) |
+
+Both contain the same requests (CRUD for cars, customers and rentals, the aggregated endpoints, and 400/404/409 error cases), each with status-code tests.
+The base URL is the collection variable `baseUrl`.
+
+Note: the free Render instance sleeps when idle, so the first request can take about a minute. The H2 database resets to the seed data on every restart.
