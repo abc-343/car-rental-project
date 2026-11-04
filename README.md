@@ -3,7 +3,7 @@
 Spring Boot REST API for the Car Rental System designed in Part 1.
 Resources: **Car**, **Customer**, **Rental**.
 
-**Public base URL:** `https://YOUR-APP-NAME.onrender.com`
+**Public base URL:** `https://car-rental-project-k0e4.onrender.com/`
 
 ## Tech
 
