@@ -2,12 +2,28 @@
   "info": {
     "name": "Car Rental API (Render - live)",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": "Same requests as the local collection, pointed at the live Render deployment. The free Render instance sleeps when idle, so the first request can take ~1 minute."
+    "description": "Same requests as the local collection, pointed at the live Render deployment. The free Render instance sleeps when idle, so the first request can take ~1 minute. The collection can be run repeatedly: each Delete removes the record its Create made, the new customer gets a unique email, and the new rental uses a car created just for it."
   },
   "variable": [
     {
       "key": "baseUrl",
       "value": "https://car-rental-project-k0e4.onrender.com"
+    },
+    {
+      "key": "createdCarId",
+      "value": ""
+    },
+    {
+      "key": "createdCustomerId",
+      "value": ""
+    },
+    {
+      "key": "createdRentalId",
+      "value": ""
+    },
+    {
+      "key": "rentalCarId",
+      "value": ""
     }
   ],
   "item": [
@@ -175,7 +191,8 @@
                 "exec": [
                   "pm.test(\"Status is 201\", function () {",
                   "    pm.response.to.have.status(201);",
-                  "});"
+                  "});",
+                  "pm.collectionVariables.set(\"createdCarId\", pm.response.json().carId);"
                 ]
               }
             }
@@ -227,14 +244,14 @@
             "method": "DELETE",
             "header": [],
             "url": {
-              "raw": "{{baseUrl}}/api/cars/ca000000-0000-4000-a000-000000000012",
+              "raw": "{{baseUrl}}/api/cars/{{createdCarId}}",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
                 "api",
                 "cars",
-                "ca000000-0000-4000-a000-000000000012"
+                "{{createdCarId}}"
               ]
             }
           },
@@ -372,7 +389,7 @@
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"firstName\": \"Jane\",\n  \"lastName\": \"Doe\",\n  \"email\": \"jane.doe@email.com\",\n  \"phone\": \"514-555-0199\"\n}"
+              "raw": "{\n  \"firstName\": \"Jane\",\n  \"lastName\": \"Doe\",\n  \"email\": \"jane.doe.{{$timestamp}}@email.com\",\n  \"phone\": \"514-555-0199\"\n}"
             }
           },
           "event": [
@@ -383,7 +400,8 @@
                 "exec": [
                   "pm.test(\"Status is 201\", function () {",
                   "    pm.response.to.have.status(201);",
-                  "});"
+                  "});",
+                  "pm.collectionVariables.set(\"createdCustomerId\", pm.response.json().customerId);"
                 ]
               }
             }
@@ -435,14 +453,14 @@
             "method": "DELETE",
             "header": [],
             "url": {
-              "raw": "{{baseUrl}}/api/customers/cc000000-0000-4000-a000-000000000012",
+              "raw": "{{baseUrl}}/api/customers/{{createdCustomerId}}",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
                 "api",
                 "customers",
-                "cc000000-0000-4000-a000-000000000012"
+                "{{createdCustomerId}}"
               ]
             }
           },
@@ -615,10 +633,27 @@
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"customerId\": \"cc000000-0000-4000-a000-000000000001\",\n  \"carId\": \"ca000000-0000-4000-a000-000000000005\",\n  \"startDate\": \"2026-12-01\",\n  \"endDate\": \"2026-12-05\",\n  \"status\": \"RESERVED\"\n}"
+              "raw": "{\n  \"customerId\": \"cc000000-0000-4000-a000-000000000001\",\n  \"carId\": \"{{rentalCarId}}\",\n  \"startDate\": \"2026-12-01\",\n  \"endDate\": \"2026-12-05\",\n  \"status\": \"RESERVED\"\n}"
             }
           },
           "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// create a car just for this rental, so running the collection again never double-books",
+                  "pm.sendRequest({",
+                  "    url: pm.variables.get(\"baseUrl\") + \"/api/cars\",",
+                  "    method: \"POST\",",
+                  "    header: { \"Content-Type\": \"application/json\" },",
+                  "    body: { mode: \"raw\", raw: JSON.stringify({ make: \"Hyundai\", model: \"Kona\", year: 2025, dailyRate: 52.00, status: \"AVAILABLE\" }) }",
+                  "}, function (err, res) {",
+                  "    pm.collectionVariables.set(\"rentalCarId\", res.json().carId);",
+                  "});"
+                ]
+              }
+            },
             {
               "listen": "test",
               "script": {
@@ -626,7 +661,8 @@
                 "exec": [
                   "pm.test(\"Status is 201\", function () {",
                   "    pm.response.to.have.status(201);",
-                  "});"
+                  "});",
+                  "pm.collectionVariables.set(\"createdRentalId\", pm.response.json().rentalId);"
                 ]
               }
             }
@@ -678,14 +714,14 @@
             "method": "DELETE",
             "header": [],
             "url": {
-              "raw": "{{baseUrl}}/api/rentals/ee000000-0000-4000-a000-000000000012",
+              "raw": "{{baseUrl}}/api/rentals/{{createdRentalId}}",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
                 "api",
                 "rentals",
-                "ee000000-0000-4000-a000-000000000012"
+                "{{createdRentalId}}"
               ]
             }
           },
