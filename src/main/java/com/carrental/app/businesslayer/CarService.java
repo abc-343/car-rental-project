@@ -19,6 +19,4 @@ public interface CarService {
     Car updateCar(String carId, Car updatedCar) throws CarNotFoundException;
 
     void deleteByCarId(String carId) throws CarNotFoundException;
-
-    boolean existsByCarId(String carId);
 }

@@ -12,7 +12,5 @@ public interface CarRepository extends JpaRepository<Car, Long> {
     // carId is the public UUID (the Long id stays internal)
     Optional<Car> findByCarId(String carId);
 
-    boolean existsByCarId(String carId);
-
     List<Car> findByStatus(CarStatus status);
 }

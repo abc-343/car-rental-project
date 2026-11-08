@@ -22,6 +22,4 @@ public interface RentalService {
             throws RentalNotFoundException, CustomerNotFoundException, CarNotFoundException;
 
     void deleteByRentalId(String rentalId) throws RentalNotFoundException;
-
-    boolean existsByRentalId(String rentalId);
 }

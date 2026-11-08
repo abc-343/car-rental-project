@@ -6,7 +6,7 @@ import com.carrental.app.domainlayer.RentalStatus;
 import com.carrental.app.presentationlayer.dto.request.RentalRequestDTO;
 import com.carrental.app.presentationlayer.dto.response.RentalResponseDTO;
 import com.carrental.app.presentationlayer.dto.response.RentalWithDetailsResponseDTO;
-import com.carrental.app.datamapping.RentalMapper;
+import com.carrental.app.datamappinglayer.RentalMapper;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

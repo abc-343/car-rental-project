@@ -99,11 +99,6 @@ public class RentalServiceImpl implements RentalService {
         rentalRepository.delete(rental);
     }
 
-    @Override
-    public boolean existsByRentalId(String rentalId) {
-        return rentalRepository.existsByRentalId(rentalId);
-    }
-
     // ---------------------------------------------------------------------
     // Validation and business rules
     // ---------------------------------------------------------------------
@@ -141,7 +136,7 @@ public class RentalServiceImpl implements RentalService {
     // ignoreRentalId is the (internal) id of the rental being updated, so it doesn't conflict with itself.
     private void validateCarCanBeBooked(Car car, Rental rental, Long ignoreRentalId) {
         if (!BLOCKING_STATUSES.contains(rental.getStatus())) {
-            return;   // completed / cancelled rentals are just history
+            return;   // COMPLETED and CANCELLED rentals are just history
         }
 
         if (car.getStatus() == CarStatus.MAINTENANCE) {

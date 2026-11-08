@@ -1,4 +1,4 @@
-package com.carrental.app.datamapping;
+package com.carrental.app.datamappinglayer;
 
 import com.carrental.app.domainlayer.Car;
 import com.carrental.app.presentationlayer.dto.request.CarRequestDTO;

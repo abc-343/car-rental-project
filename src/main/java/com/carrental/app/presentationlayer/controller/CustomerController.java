@@ -5,7 +5,7 @@ import com.carrental.app.domainlayer.Customer;
 import com.carrental.app.presentationlayer.dto.request.CustomerRequestDTO;
 import com.carrental.app.presentationlayer.dto.response.CustomerResponseDTO;
 import com.carrental.app.presentationlayer.dto.response.CustomerWithRentalsResponseDTO;
-import com.carrental.app.datamapping.CustomerMapper;
+import com.carrental.app.datamappinglayer.CustomerMapper;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

@@ -6,7 +6,7 @@ import com.carrental.app.domainlayer.CarStatus;
 import com.carrental.app.presentationlayer.dto.request.CarRequestDTO;
 import com.carrental.app.presentationlayer.dto.response.CarResponseDTO;
 import com.carrental.app.presentationlayer.dto.response.CarWithRentalsResponseDTO;
-import com.carrental.app.datamapping.CarMapper;
+import com.carrental.app.datamappinglayer.CarMapper;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

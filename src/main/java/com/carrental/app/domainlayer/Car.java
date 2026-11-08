@@ -1,13 +1,23 @@
 package com.carrental.app.domainlayer;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+// Lombok generates the getters, setters and the no-argument constructor JPA needs.
+// The warning suppressed below comes from IntelliJ having no database connection to check the
+// table/column names against (H2 only exists while the app runs); the tables are created from these annotations.
+@SuppressWarnings("JpaDataSourceORMInspection")
 @Entity
 @Table(name = "cars")
+@Getter
+@Setter
+@NoArgsConstructor
 public class Car {
 
     @Id
@@ -39,78 +49,11 @@ public class Car {
     @OneToMany(mappedBy = "car", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Rental> rentals = new ArrayList<>();
 
-    public Car() {
-    }
-
     public Car(String make, String model, int year, BigDecimal dailyRate, CarStatus status) {
         this.make = make;
         this.model = model;
         this.year = year;
         this.dailyRate = dailyRate;
         this.status = status;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getCarId() {
-        return carId;
-    }
-
-    public void setCarId(String carId) {
-        this.carId = carId;
-    }
-
-    public String getMake() {
-        return make;
-    }
-
-    public void setMake(String make) {
-        this.make = make;
-    }
-
-    public String getModel() {
-        return model;
-    }
-
-    public void setModel(String model) {
-        this.model = model;
-    }
-
-    public int getYear() {
-        return year;
-    }
-
-    public void setYear(int year) {
-        this.year = year;
-    }
-
-    public BigDecimal getDailyRate() {
-        return dailyRate;
-    }
-
-    public void setDailyRate(BigDecimal dailyRate) {
-        this.dailyRate = dailyRate;
-    }
-
-    public CarStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(CarStatus status) {
-        this.status = status;
-    }
-
-    public List<Rental> getRentals() {
-        return rentals;
-    }
-
-    public void setRentals(List<Rental> rentals) {
-        this.rentals = rentals;
     }
 }

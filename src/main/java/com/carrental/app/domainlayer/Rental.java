@@ -1,12 +1,22 @@
 package com.carrental.app.domainlayer;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+// Lombok generates the getters, setters and the no-argument constructor JPA needs.
+// The warning suppressed below comes from IntelliJ having no database connection to check the
+// table/column names against (H2 only exists while the app runs); the tables are created from these annotations.
+@SuppressWarnings("JpaDataSourceORMInspection")
 @Entity
 @Table(name = "rentals")
+@Getter
+@Setter
+@NoArgsConstructor
 public class Rental {
 
     @Id
@@ -39,71 +49,4 @@ public class Rental {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private RentalStatus status;
-
-    public Rental() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getRentalId() {
-        return rentalId;
-    }
-
-    public void setRentalId(String rentalId) {
-        this.rentalId = rentalId;
-    }
-
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
-
-    public Car getCar() {
-        return car;
-    }
-
-    public void setCar(Car car) {
-        this.car = car;
-    }
-
-    public LocalDate getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(LocalDate startDate) {
-        this.startDate = startDate;
-    }
-
-    public LocalDate getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(LocalDate endDate) {
-        this.endDate = endDate;
-    }
-
-    public BigDecimal getTotalCost() {
-        return totalCost;
-    }
-
-    public void setTotalCost(BigDecimal totalCost) {
-        this.totalCost = totalCost;
-    }
-
-    public RentalStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(RentalStatus status) {
-        this.status = status;
-    }
 }

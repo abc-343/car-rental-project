@@ -71,11 +71,6 @@ public class CarServiceImpl implements CarService {
         carRepository.delete(car);
     }
 
-    @Override
-    public boolean existsByCarId(String carId) {
-        return carRepository.existsByCarId(carId);
-    }
-
     // ---------------------------------------------------------------------
     // Validation and business rules
     // ---------------------------------------------------------------------

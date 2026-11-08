@@ -37,24 +37,20 @@ Every endpoint can be tried from the browser there.
 
 ```
 com.carrental.app
-├── config                    
-├── exception                 
-│                             
-├── presentationlayer         
-│   ├── controller           
-│   ├── dto
-│   │   ├── request           
-│   │   └── response          
-│   └── mapper                
-├── businesslayer             
-│   └── service               
-│                             
-├── domainlayer               
-└── dataaccesslayer          
-    └── repository            
+├── config
+├── exception
+├── presentationlayer
+│   ├── controller
+│   └── dto
+│       ├── request
+│       └── response
+├── datamappinglayer
+├── businesslayer
+├── domainlayer
+└── dataaccesslayer
 resources/
 ├── application.properties
-└── data.sql      
+└── data.sql
 ```
 
 ## Relationships

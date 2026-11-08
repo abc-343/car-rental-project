@@ -13,8 +13,6 @@ public interface RentalRepository extends JpaRepository<Rental, Long> {
     // rentalId is the public UUID (the Long id stays internal)
     Optional<Rental> findByRentalId(String rentalId);
 
-    boolean existsByRentalId(String rentalId);
-
     List<Rental> findByStatus(RentalStatus status);
 
     // rentals of one car that are in one of the given statuses (used for the double-booking rule)

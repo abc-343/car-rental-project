@@ -16,6 +16,4 @@ public interface CustomerService {
     Customer updateCustomer(String customerId, Customer updatedCustomer) throws CustomerNotFoundException;
 
     void deleteByCustomerId(String customerId) throws CustomerNotFoundException;
-
-    boolean existsByCustomerId(String customerId);
 }
