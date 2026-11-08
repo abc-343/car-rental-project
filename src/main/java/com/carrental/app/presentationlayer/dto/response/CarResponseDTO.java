@@ -1,15 +1,22 @@
 package com.carrental.app.presentationlayer.dto.response;
 
-import com.carrental.app.dataaccesslayer.entity.CarStatus;
+import com.carrental.app.domainlayer.CarStatus;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 
-public record CarResponseDTO(
-        Long id,
-        String make,
-        String model,
-        int year,
-        BigDecimal dailyRate,
-        CarStatus status
-) {
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class CarResponseDTO {
+
+    // public UUID, the database id is never exposed
+    private String carId;
+    private String make;
+    private String model;
+    private int year;
+    private BigDecimal dailyRate;
+    private CarStatus status;
 }

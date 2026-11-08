@@ -1,4 +1,4 @@
-package com.carrental.app.dataaccesslayer.entity;
+package com.carrental.app.domainlayer;
 
 public enum CarStatus {
     AVAILABLE,

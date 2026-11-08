@@ -1,28 +1,33 @@
 package com.carrental.app.presentationlayer.dto.request;
 
-import com.carrental.app.dataaccesslayer.entity.RentalStatus;
+import com.carrental.app.domainlayer.RentalStatus;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
-// totalCost is not here because the server calculates it
-public record RentalRequestDTO(
-        @NotNull(message = "customerId is required")
-        @Positive(message = "customerId must be positive")
-        Long customerId,
+// id and totalCost are not here because the server generates/calculates them
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class RentalRequestDTO {
 
-        @NotNull(message = "carId is required")
-        @Positive(message = "carId must be positive")
-        Long carId,
+    // public ids (UUIDs) of the customer and the car
+    @NotBlank(message = "customerId is required")
+    private String customerId;
 
-        @NotNull(message = "startDate is required")
-        LocalDate startDate,
+    @NotBlank(message = "carId is required")
+    private String carId;
 
-        @NotNull(message = "endDate is required")
-        LocalDate endDate,
+    @NotNull(message = "startDate is required")
+    private LocalDate startDate;
 
-        @NotNull(message = "status is required")
-        RentalStatus status
-) {
+    @NotNull(message = "endDate is required")
+    private LocalDate endDate;
+
+    @NotNull(message = "status is required")
+    private RentalStatus status;
 }

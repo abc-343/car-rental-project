@@ -44,19 +44,54 @@
           ]
         },
         {
+          "name": "Filter cars by status",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/cars?status=AVAILABLE",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "cars"
+              ],
+              "query": [
+                {
+                  "key": "status",
+                  "value": "AVAILABLE"
+                }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 200\", function () { pm.response.to.have.status(200); });",
+                  "pm.test(\"Every item is AVAILABLE\", function () { pm.response.json().forEach(function (x) { pm.expect(x.status).to.eql(\"AVAILABLE\"); }); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
           "name": "Get car by id",
           "request": {
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{baseUrl}}/api/cars/1",
+              "raw": "{{baseUrl}}/api/cars/ca000000-0000-4000-a000-000000000001",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
                 "api",
                 "cars",
-                "1"
+                "ca000000-0000-4000-a000-000000000001"
               ]
             }
           },
@@ -80,14 +115,14 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{baseUrl}}/api/cars/1/rentals",
+              "raw": "{{baseUrl}}/api/cars/ca000000-0000-4000-a000-000000000001/rentals",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
                 "api",
                 "cars",
-                "1",
+                "ca000000-0000-4000-a000-000000000001",
                 "rentals"
               ]
             }
@@ -156,14 +191,14 @@
               }
             ],
             "url": {
-              "raw": "{{baseUrl}}/api/cars/2",
+              "raw": "{{baseUrl}}/api/cars/ca000000-0000-4000-a000-000000000002",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
                 "api",
                 "cars",
-                "2"
+                "ca000000-0000-4000-a000-000000000002"
               ]
             },
             "body": {
@@ -191,14 +226,14 @@
             "method": "DELETE",
             "header": [],
             "url": {
-              "raw": "{{baseUrl}}/api/cars/12",
+              "raw": "{{baseUrl}}/api/cars/ca000000-0000-4000-a000-000000000012",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
                 "api",
                 "cars",
-                "12"
+                "ca000000-0000-4000-a000-000000000012"
               ]
             }
           },
@@ -257,14 +292,14 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{baseUrl}}/api/customers/1",
+              "raw": "{{baseUrl}}/api/customers/cc000000-0000-4000-a000-000000000001",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
                 "api",
                 "customers",
-                "1"
+                "cc000000-0000-4000-a000-000000000001"
               ]
             }
           },
@@ -288,14 +323,14 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{baseUrl}}/api/customers/1/rentals",
+              "raw": "{{baseUrl}}/api/customers/cc000000-0000-4000-a000-000000000001/rentals",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
                 "api",
                 "customers",
-                "1",
+                "cc000000-0000-4000-a000-000000000001",
                 "rentals"
               ]
             }
@@ -364,14 +399,14 @@
               }
             ],
             "url": {
-              "raw": "{{baseUrl}}/api/customers/2",
+              "raw": "{{baseUrl}}/api/customers/cc000000-0000-4000-a000-000000000002",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
                 "api",
                 "customers",
-                "2"
+                "cc000000-0000-4000-a000-000000000002"
               ]
             },
             "body": {
@@ -399,14 +434,14 @@
             "method": "DELETE",
             "header": [],
             "url": {
-              "raw": "{{baseUrl}}/api/customers/12",
+              "raw": "{{baseUrl}}/api/customers/cc000000-0000-4000-a000-000000000012",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
                 "api",
                 "customers",
-                "12"
+                "cc000000-0000-4000-a000-000000000012"
               ]
             }
           },
@@ -460,19 +495,54 @@
           ]
         },
         {
+          "name": "Filter rentals by status",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/rentals?status=ACTIVE",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "rentals"
+              ],
+              "query": [
+                {
+                  "key": "status",
+                  "value": "ACTIVE"
+                }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 200\", function () { pm.response.to.have.status(200); });",
+                  "pm.test(\"Every item is ACTIVE\", function () { pm.response.json().forEach(function (x) { pm.expect(x.status).to.eql(\"ACTIVE\"); }); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
           "name": "Get rental by id",
           "request": {
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{baseUrl}}/api/rentals/1",
+              "raw": "{{baseUrl}}/api/rentals/ee000000-0000-4000-a000-000000000001",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
                 "api",
                 "rentals",
-                "1"
+                "ee000000-0000-4000-a000-000000000001"
               ]
             }
           },
@@ -496,14 +566,14 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{baseUrl}}/api/rentals/1/details",
+              "raw": "{{baseUrl}}/api/rentals/ee000000-0000-4000-a000-000000000001/details",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
                 "api",
                 "rentals",
-                "1",
+                "ee000000-0000-4000-a000-000000000001",
                 "details"
               ]
             }
@@ -544,7 +614,7 @@
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"customerId\": 1,\n  \"carId\": 5,\n  \"startDate\": \"2026-12-01\",\n  \"endDate\": \"2026-12-05\",\n  \"status\": \"RESERVED\"\n}"
+              "raw": "{\n  \"customerId\": \"cc000000-0000-4000-a000-000000000001\",\n  \"carId\": \"ca000000-0000-4000-a000-000000000005\",\n  \"startDate\": \"2026-12-01\",\n  \"endDate\": \"2026-12-05\",\n  \"status\": \"RESERVED\"\n}"
             }
           },
           "event": [
@@ -572,19 +642,19 @@
               }
             ],
             "url": {
-              "raw": "{{baseUrl}}/api/rentals/2",
+              "raw": "{{baseUrl}}/api/rentals/ee000000-0000-4000-a000-000000000002",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
                 "api",
                 "rentals",
-                "2"
+                "ee000000-0000-4000-a000-000000000002"
               ]
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"customerId\": 1,\n  \"carId\": 5,\n  \"startDate\": \"2026-12-01\",\n  \"endDate\": \"2026-12-05\",\n  \"status\": \"ACTIVE\"\n}"
+              "raw": "{\n  \"customerId\": \"cc000000-0000-4000-a000-000000000001\",\n  \"carId\": \"ca000000-0000-4000-a000-000000000003\",\n  \"startDate\": \"2026-10-10\",\n  \"endDate\": \"2026-10-13\",\n  \"status\": \"COMPLETED\"\n}"
             }
           },
           "event": [
@@ -607,14 +677,14 @@
             "method": "DELETE",
             "header": [],
             "url": {
-              "raw": "{{baseUrl}}/api/rentals/12",
+              "raw": "{{baseUrl}}/api/rentals/ee000000-0000-4000-a000-000000000012",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
                 "api",
                 "rentals",
-                "12"
+                "ee000000-0000-4000-a000-000000000012"
               ]
             }
           },
@@ -643,14 +713,14 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{baseUrl}}/api/cars/9999",
+              "raw": "{{baseUrl}}/api/cars/00000000-0000-4000-a000-000000009999",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
                 "api",
                 "cars",
-                "9999"
+                "00000000-0000-4000-a000-000000009999"
               ]
             }
           },
@@ -674,14 +744,14 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{baseUrl}}/api/customers/9999",
+              "raw": "{{baseUrl}}/api/customers/00000000-0000-4000-a000-000000009999",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
                 "api",
                 "customers",
-                "9999"
+                "00000000-0000-4000-a000-000000009999"
               ]
             }
           },
@@ -705,14 +775,14 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{baseUrl}}/api/rentals/9999",
+              "raw": "{{baseUrl}}/api/rentals/00000000-0000-4000-a000-000000009999",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
                 "api",
                 "rentals",
-                "9999"
+                "00000000-0000-4000-a000-000000009999"
               ]
             }
           },
@@ -830,7 +900,7 @@
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"customerId\": 1,\n  \"carId\": 5,\n  \"startDate\": \"2026-12-05\",\n  \"endDate\": \"2026-12-01\",\n  \"status\": \"RESERVED\"\n}"
+              "raw": "{\n  \"customerId\": \"cc000000-0000-4000-a000-000000000001\",\n  \"carId\": \"ca000000-0000-4000-a000-000000000005\",\n  \"startDate\": \"2026-12-05\",\n  \"endDate\": \"2026-12-01\",\n  \"status\": \"RESERVED\"\n}"
             }
           },
           "event": [

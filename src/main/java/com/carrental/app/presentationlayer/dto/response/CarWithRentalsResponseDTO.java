@@ -1,18 +1,24 @@
 package com.carrental.app.presentationlayer.dto.response;
 
-import com.carrental.app.dataaccesslayer.entity.CarStatus;
+import com.carrental.app.domainlayer.CarStatus;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.util.List;
 
 // aggregated response: one car + all of its rentals
-public record CarWithRentalsResponseDTO(
-        Long id,
-        String make,
-        String model,
-        int year,
-        BigDecimal dailyRate,
-        CarStatus status,
-        List<RentalResponseDTO> rentals
-) {
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class CarWithRentalsResponseDTO {
+
+    private String carId;
+    private String make;
+    private String model;
+    private int year;
+    private BigDecimal dailyRate;
+    private CarStatus status;
+    private List<RentalResponseDTO> rentals;
 }

@@ -1,28 +1,40 @@
 package com.carrental.app.presentationlayer.dto.request;
 
-import com.carrental.app.dataaccesslayer.entity.CarStatus;
-import jakarta.validation.constraints.*;
+import com.carrental.app.domainlayer.CarStatus;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 
-public record CarRequestDTO(
-        @NotBlank(message = "make is required")
-        @Size(max = 50, message = "make must be at most 50 characters")
-        String make,
+// id is not here because the server generates it
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class CarRequestDTO {
 
-        @NotBlank(message = "model is required")
-        @Size(max = 50, message = "model must be at most 50 characters")
-        String model,
+    @NotBlank(message = "make is required")
+    @Size(max = 50, message = "make must be at most 50 characters")
+    private String make;
 
-        @Min(value = 1886, message = "year must be 1886 or later")
-        @Max(value = 2100, message = "year must be 2100 or earlier")
-        int year,
+    @NotBlank(message = "model is required")
+    @Size(max = 50, message = "model must be at most 50 characters")
+    private String model;
 
-        @NotNull(message = "dailyRate is required")
-        @Positive(message = "dailyRate must be greater than 0")
-        BigDecimal dailyRate,
+    @Min(value = 1886, message = "year must be 1886 or later")
+    @Max(value = 2100, message = "year must be 2100 or earlier")
+    private int year;
 
-        @NotNull(message = "status is required")
-        CarStatus status
-) {
+    @NotNull(message = "dailyRate is required")
+    @Positive(message = "dailyRate must be greater than 0")
+    private BigDecimal dailyRate;
+
+    @NotNull(message = "status is required")
+    private CarStatus status;
 }

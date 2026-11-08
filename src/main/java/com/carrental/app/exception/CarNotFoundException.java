@@ -2,7 +2,7 @@ package com.carrental.app.exception;
 
 public class CarNotFoundException extends NotFoundException {
 
-    public CarNotFoundException(Long id) {
-        super("Car " + id + " not found");
+    public CarNotFoundException(String carId) {
+        super("Car " + carId + " not found");
     }
 }

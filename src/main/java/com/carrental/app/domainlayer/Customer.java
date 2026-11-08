@@ -1,4 +1,4 @@
-package com.carrental.app.dataaccesslayer.entity;
+package com.carrental.app.domainlayer;
 
 import jakarta.persistence.*;
 
@@ -11,7 +11,11 @@ public class Customer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long id;   // internal database id, never sent to the client
+
+    // public identifier (UUID) used in the API and in URLs
+    @Column(name = "customer_id", nullable = false, unique = true, length = 36)
+    private String customerId;
 
     @Column(name = "first_name", nullable = false)
     private String firstName;
@@ -45,6 +49,14 @@ public class Customer {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
     }
 
     public String getFirstName() {

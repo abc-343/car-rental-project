@@ -2,7 +2,7 @@ package com.carrental.app.exception;
 
 public class CustomerNotFoundException extends NotFoundException {
 
-    public CustomerNotFoundException(Long id) {
-        super("Customer " + id + " not found");
+    public CustomerNotFoundException(String customerId) {
+        super("Customer " + customerId + " not found");
     }
 }

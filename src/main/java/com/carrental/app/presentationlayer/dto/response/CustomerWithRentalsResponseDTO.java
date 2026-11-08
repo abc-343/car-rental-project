@@ -1,14 +1,21 @@
 package com.carrental.app.presentationlayer.dto.response;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.util.List;
 
 // aggregated response: one customer + all of their rentals
-public record CustomerWithRentalsResponseDTO(
-        Long id,
-        String firstName,
-        String lastName,
-        String email,
-        String phone,
-        List<RentalResponseDTO> rentals
-) {
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class CustomerWithRentalsResponseDTO {
+
+    private String customerId;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String phone;
+    private List<RentalResponseDTO> rentals;
 }

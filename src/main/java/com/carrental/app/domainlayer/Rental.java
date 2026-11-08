@@ -1,4 +1,4 @@
-package com.carrental.app.dataaccesslayer.entity;
+package com.carrental.app.domainlayer;
 
 import jakarta.persistence.*;
 
@@ -11,7 +11,11 @@ public class Rental {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long id;   // internal database id, never sent to the client
+
+    // public identifier (UUID) used in the API and in URLs
+    @Column(name = "rental_id", nullable = false, unique = true, length = 36)
+    private String rentalId;
 
     // many rentals -> one customer (FK customer_id)
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -45,6 +49,14 @@ public class Rental {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getRentalId() {
+        return rentalId;
+    }
+
+    public void setRentalId(String rentalId) {
+        this.rentalId = rentalId;
     }
 
     public Customer getCustomer() {

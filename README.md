@@ -1,15 +1,15 @@
-# Car Rental API — Part 2 (Backend)
+# Car Rental API (Backend)
 
 Spring Boot REST API for the Car Rental System designed in Part 1.
 Resources: **Car**, **Customer**, **Rental**.
 
 **Public base URL:** `https://car-rental-project-k0e4.onrender.com/`
 
-## Tech
-
 - Java 17, Spring Boot 3.5, Gradle
 - Spring Web, Spring Data JPA, Bean Validation
 - H2 in-memory database (seeded from `data.sql` on startup)
+- Lombok for the request/response models
+- springdoc-openapi for Swagger UI
 
 ## Run locally (IntelliJ)
 
@@ -19,6 +19,13 @@ Resources: **Car**, **Customer**, **Rental**.
 4. The API runs on `http://localhost:8080`.
 
 Or from a terminal: `./gradlew bootRun` (Windows: `gradlew.bat bootRun`).
+
+### Swagger UI (API documentation)
+
+- `http://localhost:8080/swagger-ui.html` (live: `https://car-rental-project-k0e4.onrender.com/swagger-ui.html`)
+- Raw OpenAPI JSON: `/v3/api-docs`
+
+Every endpoint can be tried from the browser there.
 
 ### H2 console
 
@@ -30,23 +37,24 @@ Or from a terminal: `./gradlew bootRun` (Windows: `gradlew.bat bootRun`).
 
 ```
 com.carrental.app
-├── config                    WebConfig (CORS for the React frontend)
-├── exception                 NotFoundException(s), BadRequestException, ConflictException
-├── presentationlayer         Presentation layer (HTTP in/out)
-│   ├── controller            REST controllers
+├── config                    
+├── exception                 
+│                             
+├── presentationlayer         
+│   ├── controller           
 │   ├── dto
-│   │   ├── request           CarRequestDTO, CustomerRequestDTO, RentalRequestDTO
-│   │   └── response          ResponseDTOs, SummaryDTOs and aggregated DTOs
-│   └── exception             GlobalExceptionHandler, ErrorResponse
-├── businesslayer             Business logic layer
-│   ├── service               Services (business rules)
-│   └── mapper                Manual entity <-> DTO mappers
-└── dataaccesslayer           Data access layer
-    ├── entity                JPA entities + enums
-    └── repository            Spring Data JPA repositories
+│   │   ├── request           
+│   │   └── response          
+│   └── mapper                
+├── businesslayer             
+│   └── service               
+│                             
+├── domainlayer               
+└── dataaccesslayer          
+    └── repository            
 resources/
 ├── application.properties
-└── data.sql      Seed data (12 rows per table)
+└── data.sql      
 ```
 
 ## Relationships
@@ -59,33 +67,42 @@ Deleting a car or a customer also deletes their rentals (cascade).
 
 ## Endpoints
 
-| Method | Endpoint                    | Description                                             | Success        |
-| ------ | --------------------------- | ------------------------------------------------------- | -------------- |
-| GET    | /api/cars                   | All cars                                                | 200            |
-| GET    | /api/cars/{id}              | One car                                                 | 200            |
-| GET    | /api/cars/{id}/rentals      | **Aggregated:** car + its rentals                       | 200            |
-| POST   | /api/cars                   | Create car                                              | 201 + Location |
-| PUT    | /api/cars/{id}              | Update car                                              | 200            |
-| DELETE | /api/cars/{id}              | Delete car                                              | 204            |
-| GET    | /api/customers              | All customers                                           | 200            |
-| GET    | /api/customers/{id}         | One customer                                            | 200            |
-| GET    | /api/customers/{id}/rentals | **Aggregated:** customer + their rentals                | 200            |
-| POST   | /api/customers              | Create customer                                         | 201 + Location |
-| PUT    | /api/customers/{id}         | Update customer                                         | 200            |
-| DELETE | /api/customers/{id}         | Delete customer                                         | 204            |
-| GET    | /api/rentals                | All rentals                                             | 200            |
-| GET    | /api/rentals/{id}           | One rental                                              | 200            |
-| GET    | /api/rentals/{id}/details   | **Aggregated:** rental + customer summary + car summary | 200            |
-| POST   | /api/rentals                | Create rental (totalCost is calculated)                 | 201 + Location |
-| PUT    | /api/rentals/{id}           | Update rental                                           | 200            |
-| DELETE | /api/rentals/{id}           | Delete rental                                           | 204            |
+| Method | Endpoint                            | Description                                             | Success        |
+| ------ | ----------------------------------- | ------------------------------------------------------- | -------------- |
+| GET    | /api/cars                           | All cars (optional filter: `?status=AVAILABLE`)         | 200            |
+| GET    | /api/cars/{carId}                   | One car                                                 | 200            |
+| GET    | /api/cars/{carId}/rentals           | **Aggregated:** car + its rentals                       | 200            |
+| POST   | /api/cars                           | Create car                                              | 201 + Location |
+| PUT    | /api/cars/{carId}                   | Update car                                              | 200            |
+| DELETE | /api/cars/{carId}                   | Delete car                                              | 204            |
+| GET    | /api/customers                      | All customers                                           | 200            |
+| GET    | /api/customers/{customerId}         | One customer                                            | 200            |
+| GET    | /api/customers/{customerId}/rentals | **Aggregated:** customer + their rentals                | 200            |
+| POST   | /api/customers                      | Create customer                                         | 201 + Location |
+| PUT    | /api/customers/{customerId}         | Update customer                                         | 200            |
+| DELETE | /api/customers/{customerId}         | Delete customer                                         | 204            |
+| GET    | /api/rentals                        | All rentals (optional filter: `?status=ACTIVE`)         | 200            |
+| GET    | /api/rentals/{rentalId}             | One rental                                              | 200            |
+| GET    | /api/rentals/{rentalId}/details     | **Aggregated:** rental + customer summary + car summary | 200            |
+| POST   | /api/rentals                        | Create rental (totalCost is calculated)                 | 201 + Location |
+| PUT    | /api/rentals/{rentalId}             | Update rental                                           | 200            |
+| DELETE | /api/rentals/{rentalId}             | Delete rental                                           | 204            |
 
-### Business rules (RentalService)
+### Request flow
 
-- `totalCost = number of days × car dailyRate` (a same-day rental counts as 1 day)
+`Controller` → mapper `requestModelToEntity` → `Service` (works with entities, validates, applies the
+business rules, calls the `Repository`) → back in the controller, mapper `entityToResponseModel` /
+`entityListToResponseModelList` builds the response DTO.
+
+### Business rules (service implementations)
+
+- `totalCost = number of days × car dailyRate` (a same-day rental counts as 1 day), always calculated by the server
 - `endDate` cannot be before `startDate` → 400
-- A car in `MAINTENANCE` cannot be rented → 400
-- Customer email must be unique → 409
+- A car in `MAINTENANCE` cannot be RESERVED/ACTIVE → 400
+- A car cannot be booked twice for overlapping dates (RESERVED/ACTIVE rentals) → 409
+- A car that is on an ACTIVE rental cannot be put into `MAINTENANCE` → 409
+- Customer email must be unique (case-insensitive) → 409
+- Updating a car or customer keeps its existing rentals
 
 ### Error format
 
@@ -94,8 +111,8 @@ Deleting a car or a customer also deletes their rentals (cascade).
   "timestamp": "2026-10-25T21:13:21.003",
   "status": 404,
   "error": "Not Found",
-  "message": "Rental 123 not found",
-  "path": "/api/rentals/123"
+  "message": "Rental 00000000-0000-4000-a000-000000009999 not found",
+  "path": "/api/rentals/00000000-0000-4000-a000-000000009999"
 }
 ```
 
@@ -113,16 +130,19 @@ curl -i -X POST http://localhost:8080/api/customers \
 # create a rental -> 201, totalCost = 4 days * 52.00 = 208.00
 curl -i -X POST http://localhost:8080/api/rentals \
   -H "Content-Type: application/json" \
-  -d '{"customerId":1,"carId":5,"startDate":"2026-12-01","endDate":"2026-12-05","status":"RESERVED"}'
+  -d '{"customerId":"cc000000-0000-4000-a000-000000000001","carId":"ca000000-0000-4000-a000-000000000005","startDate":"2026-12-01","endDate":"2026-12-05","status":"RESERVED"}'
 
 # aggregated
-curl http://localhost:8080/api/customers/1/rentals
+curl http://localhost:8080/api/customers/cc000000-0000-4000-a000-000000000001/rentals
+
+# filter
+curl "http://localhost:8080/api/cars?status=AVAILABLE"
 
 # delete -> 204
-curl -i -X DELETE http://localhost:8080/api/rentals/12
+curl -i -X DELETE http://localhost:8080/api/rentals/ee000000-0000-4000-a000-000000000012
 
 # missing id -> 404
-curl -i http://localhost:8080/api/cars/9999
+curl -i http://localhost:8080/api/cars/00000000-0000-4000-a000-000000009999
 ```
 
 ## Postman

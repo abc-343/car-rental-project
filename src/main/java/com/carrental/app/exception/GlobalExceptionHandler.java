@@ -1,8 +1,5 @@
-package com.carrental.app.presentationlayer.exception;
+package com.carrental.app.exception;
 
-import com.carrental.app.exception.BadRequestException;
-import com.carrental.app.exception.ConflictException;
-import com.carrental.app.exception.NotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
