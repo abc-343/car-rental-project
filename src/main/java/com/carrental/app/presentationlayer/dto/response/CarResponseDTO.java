@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 public class CarResponseDTO {
 
-    // public UUID, the database id is never exposed
+    // public id (e.g. CAR-0001), the database id is never exposed
     private String carId;
     private String make;
     private String model;

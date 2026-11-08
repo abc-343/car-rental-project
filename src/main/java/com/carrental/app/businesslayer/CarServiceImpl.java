@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class CarServiceImpl implements CarService {
@@ -45,7 +44,7 @@ public class CarServiceImpl implements CarService {
         validateCar(car);
 
         car.setId(null);                             // null = new, the database generates the id
-        car.setCarId(UUID.randomUUID().toString());  // system: public id
+        car.setCarId(PublicIdGenerator.next("CAR", carRepository.findAll().stream().map(Car::getCarId).toList()));  // system: e.g. CAR-0013
         return carRepository.save(car);
     }
 

@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface CarRepository extends JpaRepository<Car, Long> {
 
-    // carId is the public UUID (the Long id stays internal)
+    // carId is the public id, e.g. CAR-0001 (the Long id stays internal)
     Optional<Car> findByCarId(String carId);
 
     List<Car> findByStatus(CarStatus status);

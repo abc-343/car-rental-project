@@ -16,6 +16,6 @@ public class OpenApiConfig {
                         .title("Car Rental API")
                         .version("1.0.0")
                         .description("REST API for the Car Rental System: cars, customers and rentals. "
-                                + "Resources are identified by public UUIDs (carId, customerId, rentalId)."));
+                                + "Resources are identified by readable public ids: carId (CAR-0001), customerId (CUS-0001), rentalId (RNT-0001)."));
     }
 }

@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class CustomerResponseDTO {
 
-    // public UUID, the database id is never exposed
+    // public id (e.g. CAR-0001), the database id is never exposed
     private String customerId;
     private String firstName;
     private String lastName;

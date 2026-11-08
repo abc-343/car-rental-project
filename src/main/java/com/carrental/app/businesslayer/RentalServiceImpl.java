@@ -21,7 +21,6 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Objects;
-import java.util.UUID;
 
 @Service
 public class RentalServiceImpl implements RentalService {
@@ -66,7 +65,7 @@ public class RentalServiceImpl implements RentalService {
         validateCarCanBeBooked(car, rental, null);
 
         rental.setId(null);                                       // null = new
-        rental.setRentalId(UUID.randomUUID().toString());         // system: public id
+        rental.setRentalId(PublicIdGenerator.next("RNT", rentalRepository.findAll().stream().map(Rental::getRentalId).toList()));  // system: e.g. RNT-0013
         rental.setCustomer(customer);
         rental.setCar(car);
         rental.setTotalCost(calculateTotalCost(car.getDailyRate(), rental.getStartDate(), rental.getEndDate()));  // system

@@ -107,8 +107,8 @@ business rules, calls the `Repository`) → back in the controller, mapper `enti
   "timestamp": "2026-10-25T21:13:21.003",
   "status": 404,
   "error": "Not Found",
-  "message": "Rental 00000000-0000-4000-a000-000000009999 not found",
-  "path": "/api/rentals/00000000-0000-4000-a000-000000009999"
+  "message": "Rental RNT-9999 not found",
+  "path": "/api/rentals/RNT-9999"
 }
 ```
 
@@ -126,19 +126,19 @@ curl -i -X POST http://localhost:8080/api/customers \
 # create a rental -> 201, totalCost = 4 days * 52.00 = 208.00
 curl -i -X POST http://localhost:8080/api/rentals \
   -H "Content-Type: application/json" \
-  -d '{"customerId":"cc000000-0000-4000-a000-000000000001","carId":"ca000000-0000-4000-a000-000000000005","startDate":"2026-12-01","endDate":"2026-12-05","status":"RESERVED"}'
+  -d '{"customerId":"CUS-0001","carId":"CAR-0005","startDate":"2026-12-01","endDate":"2026-12-05","status":"RESERVED"}'
 
 # aggregated
-curl http://localhost:8080/api/customers/cc000000-0000-4000-a000-000000000001/rentals
+curl http://localhost:8080/api/customers/CUS-0001/rentals
 
 # filter
 curl "http://localhost:8080/api/cars?status=AVAILABLE"
 
 # delete -> 204
-curl -i -X DELETE http://localhost:8080/api/rentals/ee000000-0000-4000-a000-000000000012
+curl -i -X DELETE http://localhost:8080/api/rentals/RNT-0012
 
 # missing id -> 404
-curl -i http://localhost:8080/api/cars/00000000-0000-4000-a000-000000009999
+curl -i http://localhost:8080/api/cars/CAR-9999
 ```
 
 ## Postman

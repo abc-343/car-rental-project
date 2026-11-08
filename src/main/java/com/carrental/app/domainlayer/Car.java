@@ -24,8 +24,8 @@ public class Car {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;   // internal database id, never sent to the client
 
-    // public identifier (UUID) used in the API and in URLs
-    @Column(name = "car_id", nullable = false, unique = true, length = 36)
+    // public id used in the API and in URLs, e.g. CAR-0001
+    @Column(name = "car_id", nullable = false, unique = true, length = 20)
     private String carId;
 
     @Column(nullable = false)

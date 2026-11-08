@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class RentalResponseDTO {
 
-    // public UUID, the database id is never exposed
+    // public id (e.g. CAR-0001), the database id is never exposed
     private String rentalId;
     private String customerId;
     private String carId;

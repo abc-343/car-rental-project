@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
 
-    // customerId is the public UUID (the Long id stays internal)
+    // customerId is the public id, e.g. CUS-0001 (the Long id stays internal)
     Optional<Customer> findByCustomerId(String customerId);
 
     boolean existsByEmailIgnoreCase(String email);

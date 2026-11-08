@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public interface RentalRepository extends JpaRepository<Rental, Long> {
 
-    // rentalId is the public UUID (the Long id stays internal)
+    // rentalId is the public id, e.g. RNT-0001 (the Long id stays internal)
     Optional<Rental> findByRentalId(String rentalId);
 
     List<Rental> findByStatus(RentalStatus status);

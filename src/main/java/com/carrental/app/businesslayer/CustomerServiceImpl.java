@@ -8,7 +8,6 @@ import com.carrental.app.exception.CustomerNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
@@ -42,7 +41,7 @@ public class CustomerServiceImpl implements CustomerService {
         }
 
         customer.setId(null);                                  // null = new, the database generates the id
-        customer.setCustomerId(UUID.randomUUID().toString());  // system: public id
+        customer.setCustomerId(PublicIdGenerator.next("CUS", customerRepository.findAll().stream().map(Customer::getCustomerId).toList()));  // system: e.g. CUS-0013
         return customerRepository.save(customer);
     }
 

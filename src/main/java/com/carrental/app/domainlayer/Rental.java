@@ -23,8 +23,8 @@ public class Rental {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;   // internal database id, never sent to the client
 
-    // public identifier (UUID) used in the API and in URLs
-    @Column(name = "rental_id", nullable = false, unique = true, length = 36)
+    // public id used in the API and in URLs, e.g. RNT-0001
+    @Column(name = "rental_id", nullable = false, unique = true, length = 20)
     private String rentalId;
 
     // many rentals -> one customer (FK customer_id)

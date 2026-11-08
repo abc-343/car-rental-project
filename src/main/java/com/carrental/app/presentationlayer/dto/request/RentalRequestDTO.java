@@ -15,7 +15,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class RentalRequestDTO {
 
-    // public ids (UUIDs) of the customer and the car
+    // public ids of the customer and the car, e.g. CUS-0001 and CAR-0005
     @NotBlank(message = "customerId is required")
     private String customerId;
 
