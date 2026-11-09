@@ -1,0 +1,78 @@
+@startuml CarManagement
+!pragma layout smetana
+title Car Management Context
+
+skinparam shadowing false
+skinparam class {
+    BackgroundColor #F1F1F1
+    BorderColor #888888
+    ArrowColor #333333
+}
+hide empty members
+
+class Car <<Aggregate Root>> #FCE3BF ##E8A33D {
+    - carId : CarId
+    - make : String
+    - model : String
+    - year : CarYear
+    - dailyRate : DailyRate
+    - status : CarStatus
+    --
+    + getCarId() : CarId
+    + getMake() : String
+    + getModel() : String
+    + getYear() : CarYear
+    + getDailyRate() : DailyRate
+    + getStatus() : CarStatus
+    + setStatus(newStatus : CarStatus) : void
+}
+
+class CarId <<Value Object>> #BEE3F8 ##5B9BD5 {
+    - value : String
+    --
+    + generate() : CarId
+}
+
+class CarYear <<Value Object>> #BEE3F8 ##5B9BD5 {
+    - value : int
+    --
+    + isValid() : boolean
+}
+
+class DailyRate <<Value Object>> #BEE3F8 ##5B9BD5 {
+    - amount : BigDecimal
+    --
+    + isValid() : boolean
+}
+
+enum CarStatus {
+    AVAILABLE
+    RENTED
+    MAINTENANCE
+}
+
+Car *-- CarId
+Car *-- CarYear
+Car *-- DailyRate
+Car *-- CarStatus
+
+legend right
+    |= Color |= Element |
+    |<#FCE3BF>| Aggregate Root |
+    |<#BEE3F8>| Value Object |
+    |<#F1F1F1>| Enumeration |
+    --
+    <color:#E8A33D>Aggregate Root:</color>
+    Car is the entry point of the aggregate.
+    Public id CarId (e.g. CAR-0001); the internal
+    database id is never exposed.
+    A car on an ACTIVE rental cannot be
+    put into MAINTENANCE.
+    --
+    <color:#5B9BD5>Value Object:</color>
+    Immutable, defined by its values.
+    CarYear must be between 1886 and 2100,
+    DailyRate must be greater than 0.
+endlegend
+
+@enduml

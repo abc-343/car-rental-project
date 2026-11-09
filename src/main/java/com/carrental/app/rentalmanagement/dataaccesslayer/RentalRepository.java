@@ -1,0 +1,20 @@
+package com.carrental.app.rentalmanagement.dataaccesslayer;
+
+import com.carrental.app.carmanagement.domainlayer.Car;
+import com.carrental.app.rentalmanagement.domainlayer.Rental;
+import com.carrental.app.rentalmanagement.domainlayer.RentalStatus;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
+import java.util.Optional;
+
+public interface RentalRepository extends JpaRepository<Rental, Long> {
+
+    // rentalId is the public id, e.g. RNT-0001 (the Long id stays internal)
+    Optional<Rental> findByRentalId(String rentalId);
+
+    List<Rental> findByStatus(RentalStatus status);
+
+    // rentals of one car that are in one of the given statuses (used for the double-booking rule)
+    List<Rental> findByCarAndStatusIn(Car car, List<RentalStatus> statuses);
+}

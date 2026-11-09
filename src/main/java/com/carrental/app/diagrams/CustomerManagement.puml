@@ -1,0 +1,66 @@
+@startuml CustomerManagement
+!pragma layout smetana
+title Customer Management Context
+
+skinparam shadowing false
+skinparam class {
+    BackgroundColor #F1F1F1
+    BorderColor #888888
+    ArrowColor #333333
+}
+hide empty members
+
+class Customer <<Aggregate Root>> #FCE3BF ##E8A33D {
+    - customerId : CustomerId
+    - firstName : String
+    - lastName : String
+    - email : Email
+    - phone : PhoneNumber
+    --
+    + getCustomerId() : CustomerId
+    + getFirstName() : String
+    + getLastName() : String
+    + getEmail() : Email
+    + getPhone() : PhoneNumber
+}
+
+class CustomerId <<Value Object>> #BEE3F8 ##5B9BD5 {
+    - value : String
+    --
+    + generate() : CustomerId
+}
+
+class Email <<Value Object>> #BEE3F8 ##5B9BD5 {
+    - address : String
+    --
+    + isValid() : boolean
+}
+
+class PhoneNumber <<Value Object>> #BEE3F8 ##5B9BD5 {
+    - number : String
+    --
+    + isValid() : boolean
+}
+
+Customer *-- CustomerId
+Customer *-- Email
+Customer *-- PhoneNumber
+
+legend right
+    |= Color |= Element |
+    |<#FCE3BF>| Aggregate Root |
+    |<#BEE3F8>| Value Object |
+    --
+    <color:#E8A33D>Aggregate Root:</color>
+    Customer is the entry point of the aggregate.
+    Public id CustomerId (e.g. CUS-0001); the
+    internal database id is never exposed.
+    --
+    <color:#5B9BD5>Value Object:</color>
+    Immutable, defined by its values.
+    Email must be well-formed and unique
+    (case-insensitive); PhoneNumber is
+    at most 20 characters.
+endlegend
+
+@enduml

@@ -1,0 +1,95 @@
+@startuml RentalManagement
+!pragma layout smetana
+title Rental Management Context
+
+skinparam shadowing false
+skinparam class {
+    BackgroundColor #F1F1F1
+    BorderColor #888888
+    ArrowColor #333333
+}
+hide empty members
+
+class Rental <<Aggregate Root>> #FCE3BF ##E8A33D {
+    - rentalId : RentalId
+    - customerId : CustomerId
+    - carId : CarId
+    - period : RentalPeriod
+    - totalCost : TotalCost
+    - status : RentalStatus
+    --
+    + getRentalId() : RentalId
+    + getCustomerId() : CustomerId
+    + getCarId() : CarId
+    + getPeriod() : RentalPeriod
+    + getTotalCost() : TotalCost
+    + getStatus() : RentalStatus
+    + setStatus(newStatus : RentalStatus) : void
+}
+
+class RentalId <<Value Object>> #BEE3F8 ##5B9BD5 {
+    - value : String
+    --
+    + generate() : RentalId
+}
+
+class RentalPeriod <<Value Object>> #BEE3F8 ##5B9BD5 {
+    - startDate : LocalDate
+    - endDate : LocalDate
+    --
+    + isValid() : boolean
+    + getDays() : long
+    + overlaps(other : RentalPeriod) : boolean
+}
+
+class TotalCost <<Value Object>> #BEE3F8 ##5B9BD5 {
+    - amount : BigDecimal
+    --
+    + calculate(dailyRate : BigDecimal, period : RentalPeriod) : TotalCost
+}
+
+enum RentalStatus {
+    RESERVED
+    ACTIVE
+    COMPLETED
+    CANCELLED
+}
+
+class CustomerId <<Value Object>> #BEE3F8 ##5B9BD5 {
+    - value : String
+}
+
+class CarId <<Value Object>> #BEE3F8 ##5B9BD5 {
+    - value : String
+}
+
+Rental *-- RentalId
+Rental *-- RentalPeriod
+Rental *-- TotalCost
+Rental *-- RentalStatus
+Rental "0..*" o-- "1" CustomerId : rented by
+Rental "0..*" o-- "1" CarId : rents
+
+legend right
+    |= Color |= Element |
+    |<#FCE3BF>| Aggregate Root |
+    |<#BEE3F8>| Value Object |
+    |<#F1F1F1>| Enumeration |
+    --
+    <color:#E8A33D>Aggregate Root:</color>
+    Rental is the entry point of the aggregate.
+    Public id RentalId (e.g. RNT-0001). It refers to
+    the Customer and Car aggregates only by id.
+    --
+    <color:#5B9BD5>Value Object:</color>
+    Immutable, defined by its values.
+    RentalPeriod: endDate cannot be before startDate.
+    TotalCost = days x car daily rate
+    (a same-day rental counts as 1 day).
+    --
+    RESERVED / ACTIVE rentals block the car:
+    no overlapping periods, and the car
+    cannot be in MAINTENANCE.
+endlegend
+
+@enduml
